@@ -1,0 +1,211 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>maanavideodownload</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css" integrity="sha512-Fo3rlrZj/k7ujTnHq6r+p6MVEXkMfe+oB5bDsZjP/3O1gF+28la+j/qmG4XrYz4gB1Y5pFB+kvKCUOUY6/mS4Q==" crossorigin="anonymous" referrerpolicy="no-referrer" />
+    <style>
+         body {
+            font-family: Arial, sans-serif;
+            margin: 0;
+            padding: 20px;
+            background-color: #121212;
+            color: #e0e0e0;
+            overflow: hidden;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+        }
+        .background-animation {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            z-index: -1;
+            background: radial-gradient(circle, rgba(63, 94, 251, 0.3), rgba(252, 70, 107, 0.3));
+            animation: moveBackground 15s linear infinite;
+        }
+        @keyframes moveBackground {
+            0% {
+                background-position: 0% 50%;
+            }
+            50% {
+                background-position: 100% 50%;
+            }
+            100% {
+                background-position: 0% 50%;
+            }
+        }
+        .container {
+            max-width: 600px;
+            margin: 20px auto;
+            background: rgba(30, 30, 30, 0.9);
+            padding: 20px;
+            border-radius: 15px;
+            box-shadow: 0 0 15px rgba(0, 0, 0, 0.7);
+            animation: fadeIn 1s ease-out;
+        }
+        h2 {
+            margin-top: 0;
+            color: #ff0000;
+            text-align: center;
+            animation: fadeIn 1.5s ease-out;
+        }
+        .form-group {
+            margin-bottom: 15px;
+            position: relative;
+            animation: fadeIn 2s ease-out;
+        }
+        .form-group label {
+            display: block;
+            margin-bottom: 5px;
+            color: #ff0000;
+        }
+        .form-group input,
+        .form-group select {
+            width: 100%;
+            padding: 10px;
+            box-sizing: border-box;
+            background-color: #333;
+            color: #e0e0e0;
+            border: 1px solid #444;
+            border-radius: 5px;
+            transition: background-color 0.3s ease;
+        }
+        .form-group input::placeholder {
+            color: #888;
+        }
+        .form-group button {
+            background-color: #ff0000;
+            color: #fff;
+            padding: 12px;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+            width: 100%;
+            transition: background-color 0.3s ease, transform 0.3s ease;
+        }
+        .form-group button:hover {
+            background-color: #d00000;
+            transform: translateY(-3px);
+        }
+        .form-group i {
+            position: absolute;
+            top: 35px;
+            left: 10px;
+            color: #888;
+        }
+        .form-group input {
+            padding-left: 30px;
+        }
+        .description {
+            margin: 20px 0;
+            text-align: center;
+            animation: fadeIn 2.5s ease-out;
+        }
+        .footer {
+            margin-top: auto;
+            padding: 10px;
+            text-align: center;
+            background-color: #282828;
+            color: #bbb;
+            width: 100%;
+            border-top: 1px solid #444;
+        }
+        @keyframes fadeIn {
+            from {
+                opacity: 0;
+                transform: translateY(20px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+        @media (max-width: 600px) {
+            body {
+                padding: 10px;
+            }
+            .container {
+                padding: 15px;
+            }
+            .form-group label,
+            .form-group input,
+            .form-group select,
+            .form-group button {
+                font-size: 14px;
+            }
+        }
+        @media (max-width: 400px) {
+            .form-group button {
+                padding: 10px;
+            }
+        }
+
+    </style>
+</head>
+<body>
+    <div class="background-animation"></div>
+    <div class="container">
+        <h2>maanavideodownload <i class="fab fa-youtube"></i></h2>
+        <form id="downloadForm">
+            <div class="form-group">
+                <label for="url">YouTube URL:</label>
+                <i class="fas fa-link"></i>
+                <input type="text" id="url" name="url" placeholder="Enter YouTube URL" required>
+            </div>
+            <div class="form-group">
+                <label for="quality">Select Quality:</label>
+                <i class="fas fa-video"></i>
+                <select id="quality" name="quality" required>
+                    <option value="1080p">1080p</option>
+                    <option value="720p">720p</option>
+                    <option value="480p">480p</option>
+                    <option value="360p">360p</option>
+                </select>
+            </div>
+            <div class="form-group">
+                <button type="submit"><i class="fas fa-download"></i> Download</button>
+            </div>
+        </form>
+    </div>
+    <div class="description">
+        maanavideodownload allows you to download videos from YouTube by providing the video URL and selecting your desired quality. Enjoy seamless video downloads in just a few clicks!
+    </div>
+    <div class="footer">
+        © 2024 maanavideodownload. 
+    </div>
+    <script>
+        document.getElementById('downloadForm').addEventListener('submit', function(event) {
+            event.preventDefault();
+
+            var url = document.getElementById('url').value;
+            var quality = document.getElementById('quality').value;
+
+            if (!url || !quality) {
+                alert('Please fill out all fields.');
+                return;
+            }
+
+            fetch('download.php', {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/x-www-form-urlencoded',
+                },
+                body: `url=${encodeURIComponent(url)}&quality=${encodeURIComponent(quality)}`,
+            })
+            .then(response => response.text())
+            .then(data => {
+                alert(data); // Show the success or error message returned by the PHP script
+            })
+            .catch((error) => {
+                console.error('Error:', error);
+                alert('An error occurred while initiating the download.');
+            });
+        });
+    </script>
+</body>
+</html>
+
